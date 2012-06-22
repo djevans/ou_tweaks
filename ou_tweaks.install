@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function ou_tweaks_install() {
+  // Add URL field to user entity.
+  if (!field_info_field('user_uri')) {
+    $fields = _ou_tweaks_user_fields();
+    foreach ($fields as $field) {
+      field_create_field($field);
+    }
+    $instances = _ou_tweaks_user_field_instances();
+    foreach ($instances as $instance) {
+      field_create_instance($instance);      
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ou_tweaks_uninstall() {
+  // Remove user URL field.
+  $instances = _ou_tweaks_user_field_instances();
+  foreach ($instances as $instance) {
+    field_delete_instance($instance); // cleans up field by default
+  }
+}
+
+function _ou_tweaks_user_fields() {
+  $fields = array(
+    array(
+      'field_name' => 'user_uri',
+      'type' => 'link_field',
+    ),
+  );
+  return $fields;
+}
+
+function _ou_tweaks_user_field_instances() {
+  $instances = array(
+    array(
+      'field_name' => 'user_uri',
+      'entity_type' => 'user',
+      'label' => 'The user\'s URI on data.open.ac.uk',
+      'settings' => array(
+        // setting for link field - we don't need a title for the link
+        'title' => 'none',
+        // display the field on the user form - although the 'user' bundle (below) also helps
+        'user_register_form' => TRUE,
+      ),
+      'bundle' => 'user',
+      'required' => FALSE,
+    ),
+  );
+  return $instances;
+}

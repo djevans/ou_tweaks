@@ -1,0 +1,5 @@
+name = OU Tweaks
+description = Tweaks for the OU Research Hub
+package = OU Research Hub
+dependencies[] = link
+core = 7.x

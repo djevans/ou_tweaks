@@ -1,0 +1,14 @@
+<?php
+
+function ou_tweaks_form_FORM_ID_alter(&$form, $form_state) {
+  $form['uri'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('data.open.ac.uk'),
+    '#description' => t('The description appears at the top of the fieldset.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#access' => user_access('administer ou_tweaks'),
+  );
+  $form['uri']['user_uri'] = $form['user_uri'];
+  unset($form['user_uri']);
+}
