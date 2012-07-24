@@ -32,7 +32,7 @@ function _ou_tweaks_user_fields() {
   $fields = array(
     array(
       'field_name' => 'user_uri',
-      'type' => 'link_field',
+      'type' => 'text',
     ),
   );
   return $fields;
